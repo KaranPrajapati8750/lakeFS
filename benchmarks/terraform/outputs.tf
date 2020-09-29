@@ -78,7 +78,22 @@ output "this_db_parameter_group_arn" {
   value       = "${module.db.this_db_parameter_group_arn}"
 }
 
-output "this_dns_lb" {
+output "dns_lb" {
   description = "DNS load balancer"
   value = aws_alb.main.dns_name
+}
+
+output "cluster_arn" {
+  description = "Task cluster ARN"
+  value = aws_ecs_cluster.benchmark.arn
+}
+
+output "executor_task_definition_arn" {
+  description = "Task definition of the benchmark executor"
+  value = aws_ecs_task_definition.executor.arn
+}
+
+output "security_group_arn" {
+  description = "Environment security group"
+  value = aws_security_group.benchmark_sg.arn
 }

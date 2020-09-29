@@ -4,6 +4,14 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"net/http"
+	"os"
+	"strconv"
+	"strings"
+	"sync"
+	"sync/atomic"
+	"time"
+
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/swag"
@@ -17,13 +25,6 @@ import (
 	"github.com/treeverse/lakefs/api/gen/models"
 	"github.com/treeverse/lakefs/logging"
 	"github.com/treeverse/lakefs/testutil"
-	"net/http"
-	"os"
-	"strconv"
-	"strings"
-	"sync"
-	"sync/atomic"
-	"time"
 )
 
 var (
@@ -33,14 +34,8 @@ var (
 )
 
 func main() {
-	//benchmarkTests := flag.Bool("benchmark-tests", false, "Run benchmark tests")
-	//flag.Parse()
-	//if !*benchmarkTests {
-	//	os.Exit(0)
-	//}
-
 	viper.SetDefault("parallelism_level", 500)
-	viper.SetDefault("files_amount", 10000)
+	viper.SetDefault("files_amount", 50000)
 	viper.SetDefault("global_timeout", 30*time.Minute)
 
 	logger, client, svc = testutil.SetupTestingEnv("benchmark", "lakefs-benchmarking")
